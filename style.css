@@ -1,0 +1,44 @@
+body {
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  /* height: 100vh; */
+
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 30vh;
+}
+
+ol {
+  font-weight: bold;
+  text-align: start;
+  border: 1pt solid black;
+}
+
+li:first-child {
+  background-color: yellow;
+  text-decoration: underline;
+}
+
+li {
+  font-weight: 100;
+  margin-top: 5%;
+  font-size: 1rem;
+}
+
+footer {
+  margin-top: 5%;
+}
+
+#btnPdf {
+  margin-top: 5%;
+}
