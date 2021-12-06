@@ -1,21 +1,13 @@
-
-let nequipes=Number(document.querySelector("#qtdEquipes").value)
-let emailsForm=document.querySelector("#emails")
+let nequipes=0
+let emailsForm=""
 let btnGerar=document.querySelector("#btnGerar")
 
 let display=document.querySelector("#display")
 
 let equipes=document.createElement("h1")
 equipes.innerHTML="Equipes (O membro sublihado será o lider da equipe)"
-let equipeArray=[]
 
-// Criação da listagem
-for(n=0; n<nequipes;n++){
-  let ul=document.createElement("ol")
-  ul.innerHTML=`Equipe ${n+1}`
 
-  equipeArray.push(ul)
-}
 
 //Sorteio Aluno
 
@@ -28,6 +20,9 @@ pegarAlunoAleatorio=function(alunos){
 //Distribuição dos alunos
 
 distribuiAlunosNasEquipes=function(equipe,alunos,qtdNaEquipe){
+  if(alunos.length%nequipes==alunos.length && alunos.length!=qtdNaEquipe){
+    qtdNaEquipe-=1
+  }
   for (aluno=0;aluno<qtdNaEquipe;aluno++){
     let liAluno=document.createElement("li")
     liAluno.innerHTML=pegarAlunoAleatorio(alunos)
@@ -37,29 +32,69 @@ distribuiAlunosNasEquipes=function(equipe,alunos,qtdNaEquipe){
 }
 
 btnGerar.addEventListener("click",()=>{
+   
+  nequipes=Number(document.querySelector("#qtdEquipes").value)
+  emailsForm=document.querySelector("#emails")
   display.innerHTML=""
   let emails=emailsForm.value.split(',')
-  if(emails.length==0){
+  if(emails[0]==''){
     window.alert("Você deve adicionar os nomes dos alunos")
     return;
   }
+  if(nequipes>emails.length){
+    window.alert("O número das equipes deve ser inferior ou igual ao número de membros")
+    return;
+  }
   display.appendChild(equipes)
-  let alunosPorEquipe=emails.length/nequipes;
-  equipeArray.forEach(equipe => {
+let equipeArray=[]
+  
+  let alunosPorEquipe=Math.round(emails.length/nequipes);
+  if(alunosPorEquipe>=1){
+    
+    equipeArray=criaListagem(nequipes)
+
+  }else{
+    equipeArray=criaListagem(emails.length)
+  }
+
+  i=1
+  equipeArray.forEach(equipe => { 
     equipe.innerHTML=""
-    distribuiAlunosNasEquipes(equipe,emails,alunosPorEquipe)
+  
+  
+    p=document.createElement("h2")
+    p.innerHTML=`Equipe ${i}`
+    display.appendChild(p)
+    
+    if(i==equipeArray.length){
+      distribuiAlunosNasEquipes(equipe,emails,emails.length)
+    }else{
+      distribuiAlunosNasEquipes(equipe,emails,alunosPorEquipe)
+    }
+    i++
     display.appendChild(equipe)
   });
-console.log(emails)
+ 
+  criaBotaoGerarPDF()
+})
+
+criaBotaoGerarPDF=function(){
   let btnPdf=document.createElement('input')
   btnPdf.type = 'button';
   btnPdf.value = 'Gerar Pdf';
   btnPdf.id="btnPdf"
   display.appendChild(btnPdf)
   btnPdf.addEventListener("click",()=>window.print())
-  
-})
+}
 
-
+criaListagem=function(nequipes){
+let equipeArray=[]
+  // Criação da listagem
+  for(n=0; n<nequipes;n++){
+    let olEquipe=document.createElement("ol")
+    equipeArray.push(olEquipe)
+  }
+  return equipeArray
+}
 
 
