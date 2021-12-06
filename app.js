@@ -39,6 +39,10 @@ distribuiAlunosNasEquipes=function(equipe,alunos,qtdNaEquipe){
 btnGerar.addEventListener("click",()=>{
   display.innerHTML=""
   let emails=emailsForm.value.split(',')
+  if(emails.length==0){
+    window.alert("Você deve adicionar os nomes dos alunos")
+    return;
+  }
   display.appendChild(equipes)
   let alunosPorEquipe=emails.length/nequipes;
   equipeArray.forEach(equipe => {
