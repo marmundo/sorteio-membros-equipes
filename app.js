@@ -6,7 +6,7 @@ let btnGerar=document.querySelector("#btnGerar")
 let display=document.querySelector("#display")
 
 let equipes=document.createElement("h1")
-equipes.innerHTML="Equipes"
+equipes.innerHTML="Equipes (O membro sublihado será o lider da equipe)"
 let equipeArray=[]
 
 // Criação da listagem
